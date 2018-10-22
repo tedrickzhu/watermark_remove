@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import os
+import time
 from matplotlib import pyplot as plt
 
 #6种匹配算法
@@ -43,6 +44,8 @@ def MultiObjMatch2(image,template):
 
     cv2.imshow('res', res)
     cv2.imshow('compare', image)
+    # cv2.imwrite('./images/fangmaskreslut.jpg',image)
+    # cv2.imwrite('./images/fangmaskreslut_res.jpg',res)
     cv2.waitKey(0)
     if 0xFF == ord('q'):
         cv2.destroyAllWindows()
@@ -81,6 +84,9 @@ def MultiObjMatch1(image,template):
 
     cv2.imshow('res', res)
     cv2.imshow('compare', image)
+    res = res*255
+    cv2.imwrite('./images/fangmaskreslut_'+str(int(time.time()))+'.jpg',image)
+    cv2.imwrite('./images/fangmaskreslut_res_'+str(int(time.time()))+'.jpg',res)
     cv2.waitKey(0)
     if 0xFF == ord('q'):
         cv2.destroyAllWindows()
@@ -107,14 +113,14 @@ def MatchOne(image,template):
 
 if __name__ == '__main__':
     # image = cv2.imread('./images/fang-864x576-mask.jpg',0)
-    # image = cv2.imread('./images/fangtianxia.jpg',0)
-    image = cv2.imread('./images/anjuke.jpg',0)
+    image = cv2.imread('./images/fangtianxia.jpg',0)
+    # image = cv2.imread('./images/anjuke.jpg',0)
     # template = cv2.imread('./images/fang-mask.jpg',0)
-    # template = cv2.imread('./images/fixed-fang-mask.jpg',0)
-    template = cv2.imread('./images/ajk-logo2.jpg',0)
+    template = cv2.imread('./images/fixed-fang-mask.jpg',0)
+    # template = cv2.imread('./images/ajk-logo2.jpg',0)
     # print(template.shape,image.shape)
-    # MultiObjMatch(image,template)
-    MatchOne(image,template)
+    MultiObjMatch1(image,template)
+    # MatchOne(image,template)
 
 # plt.subplot(221), plt.imshow(image, cmap="gray")
 # plt.title('Original Image'), plt.xticks([]), plt.yticks([])
