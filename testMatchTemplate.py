@@ -85,8 +85,8 @@ def MultiObjMatch1(image,template):
     cv2.imshow('res', res)
     cv2.imshow('compare', image)
     res = res*255
-    cv2.imwrite('./images/fangmaskreslut_'+str(int(time.time()))+'.jpg',image)
-    cv2.imwrite('./images/fangmaskreslut_res_'+str(int(time.time()))+'.jpg',res)
+    # cv2.imwrite('./images/fangmaskreslut_'+str(int(time.time()))+'.jpg',image)
+    # cv2.imwrite('./images/fangmaskreslut_res_'+str(int(time.time()))+'.jpg',res)
     cv2.waitKey(0)
     if 0xFF == ord('q'):
         cv2.destroyAllWindows()
@@ -112,12 +112,12 @@ def MatchOne(image,template):
         cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    # image = cv2.imread('./images/fang-864x576-mask.jpg',0)
+    # image = cv2.imread('./mask/fang-864x576-mask.jpg',0)
     image = cv2.imread('./images/fangtianxia.jpg',0)
     # image = cv2.imread('./images/anjuke.jpg',0)
-    # template = cv2.imread('./images/fang-mask.jpg',0)
-    template = cv2.imread('./images/fixed-fang-mask.jpg',0)
-    # template = cv2.imread('./images/ajk-logo2.jpg',0)
+    # template = cv2.imread('./mask/fang-mask.jpg',0)
+    template = cv2.imread('./mask/fixed-fang-mask.jpg',0)
+    # template = cv2.imread('./mask/ajk-logo2.jpg',0)
     # print(template.shape,image.shape)
     MultiObjMatch1(image,template)
     # MatchOne(image,template)

@@ -44,16 +44,17 @@ def add_watermark_to_image(image, watermark):
     return rgba_image
 
 def addLogoImg():
-    im_before = Image.open("lianjia.jpg")
+    im_before = Image.open("./images/lianjia.jpg")
     # im_before.show()
 
-    im_watermark = Image.open("ajk-logo2.jpg")
+    im_watermark = Image.open("./mask/ajk-logo2.jpg")
     im_after = add_watermark_to_image(im_before, im_watermark)
+    print(type(im_after))
     im_after.show()
     # .save('im_add_logo.jpg')
 
 def addText():
-    im_before = Image.open("lianjia.jpg")
+    im_before = Image.open("./images/lianjia.jpg")
     im_before.show()
     im_after = add_text_to_image(im_before, 'WTF')
     im_after.show()
