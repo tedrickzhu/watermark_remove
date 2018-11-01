@@ -48,9 +48,9 @@ def gray2binary2(GrayImage):
 
 if __name__ == '__main__':
 
-    img=cv2.imread('./images/fangtianxia.jpg')
-    GrayImage=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    print(type(GrayImage),GrayImage.shape)
-    cv2.imshow('image',GrayImage)
-
-    gray2binary(GrayImage)
+    # img=cv2.imread('./mask/5i5j-logo.bmp')
+    img=cv2.imread('./../data/jpg/100000.jpg')
+    print(type(img), img.shape)
+    # GrayImage=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    # cv2.imshow('image',GrayImage)
+    # gray2binary(GrayImage)

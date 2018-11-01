@@ -19,15 +19,15 @@ flags.DEFINE_integer("input_width", None,
 flags.DEFINE_integer("output_height", 64, "The size of the output images to produce [64]")
 flags.DEFINE_integer("output_width", None,
                      "The size of the output images to produce. If None, same value as output_height [None]")
-flags.DEFINE_string("input_fname_pattern", "*.png", "Glob pattern of filename of input images [*]")
+flags.DEFINE_string("input_fname_pattern", "*.jpg", "Glob pattern of filename of input images [*]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_boolean("crop", False, "True for training, False for testing [False]")
 
-flags.DEFINE_string("dataset", "wiki_blurred/", "The name of dataset [celebA, mnist, lsun]")
+flags.DEFINE_string("dataset", "dirty/", "The name of dataset [celebA, mnist, lsun]")
 flags.DEFINE_string("checkpoint_dir", "checkpoint6/", "Directory name to save the checkpoints [checkpoint]")
 flags.DEFINE_string("sample_dir", "samples6/", "Directory name to save the image samples [samples]")
-flags.DEFINE_string("dataset_test", "wikitest_blurred/", "Directory name of testing samples")
-flags.DEFINE_string("dataset_target", "wiki/", "Directory name of target(generated) images")
+flags.DEFINE_string("dataset_test", "dirty/", "Directory name of testing samples")
+flags.DEFINE_string("dataset_target", "origin/", "Directory name of target(generated) images")
 flags.DEFINE_string("logdir", "logs6/", "logdir")
 
 FLAGS = flags.FLAGS

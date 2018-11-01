@@ -6,14 +6,16 @@
 
 import cv2
 
+'''
+通过将原图灰度化，然后二值化，然后取得logo，
+对于每一张图片二值化的阈值可能不同，需要人工参与，不具有全自动性
+'''
 def getMaskFromImg(image):
     mask = None
     #todo
 
     return mask
     pass
-
-
 
 
 if __name__ == '__main__':
