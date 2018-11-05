@@ -71,6 +71,8 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
     # filelist = os.listdir(os.getcwd()+os.sep+"data/jpg")
     filelist = os.listdir(path)
     for filename in filelist:
+        # if filename != '105104.jpg':
+        #     continue
         # print(filename)
         image = cv2.imread(path+filename)
         print(image.shape,path+filename)
@@ -82,8 +84,8 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
             image = cv2.resize(image, (int(img_w / rate), int(img_h / rate)))
         #将水印图调整到与小图一致
         img_h, img_w = image.shape[0], image.shape[1]
-        watermark = cv2.resize(watermark,(img_w, img_h))
-        mask = np.floor(watermark.astype(np.float32) * 0.3).astype(np.uint8)
+        watermark_res = cv2.resize(watermark,(img_w, img_h))
+        mask = np.floor(watermark_res.astype(np.float32) * 0.3).astype(np.uint8)
         imageadd2 = cv2.add(image,mask)
 
         # imageaddweight = cv2.addWeighted(image,0.9,watermark,0.2,0)
@@ -103,14 +105,17 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
             print(dirtypath + filename,' this dirty file has exists')
         else:
             cv2.imwrite(dirtypath + filename, imageadd2)
-        break
+        # cv2.imshow('origin', image)
+        # cv2.imshow('add2', imageadd2)
+        # cv2.waitKey(0)
+        # break
     pass
 
 
 if __name__ == '__main__':
     data = '../../data/jpg2/'
     wmpath = '../mask/5i5j-logo.bmp'
-    originpath = '../images/clean2/'
-    dirtypath = '../images/dirty2/'
+    originpath = '../images/data/origin/'
+    dirtypath = '../images/data/dirty/'
     # addLogo_cv2(data,wmpath,originpath,dirtypath)
     resize_addwm(data,wmpath,originpath,dirtypath)
