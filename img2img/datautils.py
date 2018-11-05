@@ -62,8 +62,10 @@ def addLogo_cv2(path,wmpath,originpath,dirtypath):
         break
     pass
 
-
-def resize_addwm(path,wmpath):
+'''
+缩小原图的大小，将logo图调整到与小图一致，然后添加进去
+'''
+def resize_addwm(path,wmpath,cleanpath,dirtypath):
     watermark = cv2.imread(wmpath)
     print(watermark.shape)
     # filelist = os.listdir(os.getcwd()+os.sep+"data/jpg")
@@ -71,27 +73,24 @@ def resize_addwm(path,wmpath):
     for filename in filelist:
         # print(filename)
         image = cv2.imread(path+filename)
-
-        image = cv2.resize(image,(watermark.shape[1],watermark.shape[0]))
-        imageadd = cv2.add(image,watermark)
-
+        print(image.shape,path+filename)
+        #将原图缩小,最大为400
+        img_h ,img_w = image.shape[0],image.shape[1]
+        rate = max(img_h,img_w)//400.0
+        if rate > 0.0:
+            rate = rate+1.0
+            image = cv2.resize(image, (int(img_w / rate), int(img_h / rate)))
+        #将水印图调整到与小图一致
+        img_h, img_w = image.shape[0], image.shape[1]
+        watermark = cv2.resize(watermark,(img_w, img_h))
         mask = np.floor(watermark.astype(np.float32) * 0.3).astype(np.uint8)
-        # cv2.imshow('mask',mask)
         imageadd2 = cv2.add(image,mask)
-        # imageadd2 = imageadd2 * (imageadd2 <= 255) + 255 * (imageadd2 > 255)
-        # imageadd2 = np.floor(imageadd2 * (imageadd2 <= 255) + 255 * (imageadd2 > 255)).astpye(np.uint8)
-        # imageadd2 = imageadd2.astpye(np.uint8)
 
         # imageaddweight = cv2.addWeighted(image,0.9,watermark,0.2,0)
         # imagescaleadd = cv2.scaleAdd(image,0.9,watermark,0.2)
         cv2.imshow('origin',image)
-        cv2.imshow('add',imageadd)
         cv2.imshow('add2',imageadd2)
-        # cv2.imshow('addweight',imageaddweight)
-        # cv2.imshow('scale',imagescaleadd)
         cv2.waitKey(0)
-        # print(path+filename)
-        print(image.shape)
 
         break
     pass
@@ -102,5 +101,5 @@ if __name__ == '__main__':
     wmpath = '../mask/5i5j-logo.bmp'
     originpath = '../images/origin/'
     dirtypath = '../images/dirty/'
-    addLogo_cv2(data,wmpath,originpath,dirtypath)
-
+    # addLogo_cv2(data,wmpath,originpath,dirtypath)
+    resize_addwm(data,wmpath,originpath,dirtypath)
