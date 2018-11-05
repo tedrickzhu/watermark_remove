@@ -67,7 +67,7 @@ def addLogo_cv2(path,wmpath,originpath,dirtypath):
 '''
 def resize_addwm(path,wmpath,cleanpath,dirtypath):
     watermark = cv2.imread(wmpath)
-    print(watermark.shape)
+    # print(watermark.shape)
     # filelist = os.listdir(os.getcwd()+os.sep+"data/jpg")
     filelist = os.listdir(path)
     for filename in filelist:
@@ -88,18 +88,29 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
 
         # imageaddweight = cv2.addWeighted(image,0.9,watermark,0.2,0)
         # imagescaleadd = cv2.scaleAdd(image,0.9,watermark,0.2)
-        cv2.imshow('origin',image)
-        cv2.imshow('add2',imageadd2)
-        cv2.waitKey(0)
 
+        if not os.path.exists(originpath):
+            os.makedirs(originpath)
+        if os.path.exists(originpath+filename):
+            print(originpath+filename,' this origin file has exists')
+            # cv2.imwrite(originpath+filename,image)
+        else:
+            cv2.imwrite(originpath+filename,image)
+
+        if not os.path.exists(dirtypath):
+            os.makedirs(dirtypath)
+        if os.path.exists(dirtypath + filename):
+            print(dirtypath + filename,' this dirty file has exists')
+        else:
+            cv2.imwrite(dirtypath + filename, imageadd2)
         break
     pass
 
 
 if __name__ == '__main__':
-    data = '../../data/jpg/'
+    data = '../../data/jpg2/'
     wmpath = '../mask/5i5j-logo.bmp'
-    originpath = '../images/origin/'
-    dirtypath = '../images/dirty/'
+    originpath = '../images/clean2/'
+    dirtypath = '../images/dirty2/'
     # addLogo_cv2(data,wmpath,originpath,dirtypath)
     resize_addwm(data,wmpath,originpath,dirtypath)
