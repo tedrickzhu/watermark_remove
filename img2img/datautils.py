@@ -75,7 +75,7 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
         #     continue
         # print(filename)
         image = cv2.imread(path+filename)
-        print(image.shape,path+filename)
+        print(path+filename)
         #将原图缩小,最大为400
         img_h ,img_w = image.shape[0],image.shape[1]
         rate = max(img_h,img_w)//400.0
@@ -113,7 +113,7 @@ def resize_addwm(path,wmpath,cleanpath,dirtypath):
 
 
 if __name__ == '__main__':
-    data = '../../data/jpg2/'
+    data = '../../data/voc2007train/'
     wmpath = '../mask/5i5j-logo.bmp'
     originpath = '../images/data/origin/'
     dirtypath = '../images/data/dirty/'

@@ -16,7 +16,7 @@ def conv_out_size_same(size, stride):
 
 class DCGAN(object):
     def __init__(self, sess, input_height=108, input_width=108, crop=True,
-                 batch_size=64, sample_num=64, output_height=64, output_width=64,
+                 batch_size=16, sample_num=64, output_height=64, output_width=64,
                  y_dim=None, z_dim=100, gf_dim=64, df_dim=64,
                  gfc_dim=1024, dfc_dim=1024, c_dim=3, dataset_name='dirty',
                  input_fname_pattern='*.jpg', checkpoint_dir=None, sample_dir=None,
@@ -80,7 +80,7 @@ class DCGAN(object):
         self.data_test = glob(os.path.join("../images/data/", self.dataset_test, self.input_fname_pattern))
         self.data_target = glob(os.path.join("../images/data/", self.dataset_target, self.input_fname_pattern))
         print('hhhhhhhhhhhhhhhhhhhhhhhhh')
-        print(a)
+        # print(a)
         imreadImg = imread(self.data[0])
         self.c_dim = imread(self.data[0]).shape[-1]
 
@@ -225,7 +225,7 @@ class DCGAN(object):
                        crop=self.crop,grayscale=False) for sample_file in sample_files]
 
         sample_inputs = np.array(sample).astype(np.float32)
-
+        print('hahahahahahahahahahahahahahah')
         could_load, checkpoint_counter = self.load(self.checkpoint_dir)
         if could_load:
             counter = checkpoint_counter
@@ -436,6 +436,7 @@ class DCGAN(object):
         checkpoint_dir = os.path.join(checkpoint_dir, self.model_dir)
 
         ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
+        print('asdfasdfasdfasdfadsfadsfasdfasdf', ckpt)
         if ckpt and ckpt.model_checkpoint_path:
             ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
             self.saver.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
