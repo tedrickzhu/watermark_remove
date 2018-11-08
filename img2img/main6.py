@@ -8,9 +8,9 @@ from utils import pp, visualize, to_json, show_all_variables
 import tensorflow as tf
 
 flags = tf.app.flags
-flags.DEFINE_integer("epoch", 10, "Epoch to train [25]")
-flags.DEFINE_float("learning_rate", 0.00001, "Learning rate of for adam [0.0002]")
-flags.DEFINE_float("beta1", 0.5, "Momentum term of adam [0.5]")
+flags.DEFINE_integer("epoch", 100, "Epoch to train [25]")
+flags.DEFINE_float("learning_rate", 0.000005, "Learning rate of for adam [0.0002]")
+flags.DEFINE_float("beta1", 0.8, "Momentum term of adam [0.5]")
 flags.DEFINE_integer("train_size", 100000, "The size of train images [np.inf]")
 flags.DEFINE_integer("batch_size", 16, "The size of batch images [64]")
 flags.DEFINE_integer("input_height", 400, "The size of image to use (will be center cropped). [108]")
