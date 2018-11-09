@@ -31,8 +31,8 @@ def caculate(batchsize,epoch,n=None,time=None,speed=21):
 
 if __name__ == '__main__':
     batchsize = 64
-    epoch = 200
-    n = 5061
+    epoch = 100
+    n = 7455
     time = None
 
     caculate(batchsize=batchsize,epoch=epoch,n=n,time=time)

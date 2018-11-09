@@ -68,8 +68,10 @@ def addLogo_5i5jfull(path,wmpath,originpath,dirtypath):
 '''
 缩小原图的大小，将logo图调整到与小图一致，然后添加进去
 '''
-def resize_addwm_5i5jfull(path,wmpath,cleanpath,dirtypath):
+def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
     watermark = cv2.imread(wmpath)
+    logoname = wmpath.split('/')[-1].split('.')[0]
+    # print(logoname)
     # print(watermark.shape)
     # filelist = os.listdir(os.getcwd()+os.sep+"data/jpg")
     filelist = os.listdir(path)
@@ -100,18 +102,18 @@ def resize_addwm_5i5jfull(path,wmpath,cleanpath,dirtypath):
 
         if not os.path.exists(originpath):
             os.makedirs(originpath)
-        if os.path.exists(originpath+filename):
-            print(originpath+filename,' this origin file has exists')
+        if os.path.exists(originpath+logoname+'_'+filename):
+            print(originpath+logoname+'_'+filename,' this origin file has exists')
             # cv2.imwrite(originpath+filename,image)
         else:
-            cv2.imwrite(originpath+filename,image)
+            cv2.imwrite(originpath+logoname+'_'+filename,image)
 
         if not os.path.exists(dirtypath):
             os.makedirs(dirtypath)
-        if os.path.exists(dirtypath + filename):
-            print(dirtypath + filename,' this dirty file has exists')
+        if os.path.exists(dirtypath + logoname+'_'+filename):
+            print(dirtypath + logoname+'_'+filename,' this dirty file has exists')
         else:
-            cv2.imwrite(dirtypath + filename, imageadd2)
+            cv2.imwrite(dirtypath + logoname+'_'+filename, imageadd2)
         count+=1
         # cv2.imshow('origin', image)
         # cv2.imshow('add2', imageadd2)
@@ -121,10 +123,10 @@ def resize_addwm_5i5jfull(path,wmpath,cleanpath,dirtypath):
 
 
 if __name__ == '__main__':
-    data = '../../data/oxbuild_images/'
-    wmpath = '../mask/5i5j-logo.bmp'
-    originpath = '../images/data/origin5/'
-    dirtypath = '../images/data/dirty5/'
+    data = '../../data/jpg2/'
+    wmpath = '../mask/fang_mask.jpeg'
+    originpath = '../images/data/origin/'
+    dirtypath = '../images/data/dirty/'
 
     # addLogo_5i5jfull(data,wmpath,originpath,dirtypath)
     resize_addwm_5i5jfull(data,wmpath,originpath,dirtypath)
