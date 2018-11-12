@@ -1,3 +1,4 @@
+#encoding=utf-8
 """
 Some codes from https://github.com/Newmu/dcgan_code
 """

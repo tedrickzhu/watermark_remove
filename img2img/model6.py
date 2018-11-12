@@ -1,3 +1,4 @@
+#encoding=utf-8
 from __future__ import division
 import os
 import time
@@ -23,7 +24,6 @@ class DCGAN(object):
                  dataset_test=None, dataset_target=None, logdir=None
                  ):
         """
-
     Args:
       sess: TensorFlow session
       batch_size: The size of batch. Should be specified before training.
