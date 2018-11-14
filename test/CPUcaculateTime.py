@@ -19,7 +19,7 @@ time=((n/batchsize)*epoch*speed)/3600
 n = (time*3600*batchsize)/(epoch*speed)
 '''
 
-def caculate(batchsize,epoch,n=None,time=None,speed=21):
+def caculate(batchsize,epoch,n=None,time=None,speed=25):
     if n is not None and time is None:
         # n=5200
         time=((n/batchsize)*epoch*speed)/3600.0
@@ -30,10 +30,10 @@ def caculate(batchsize,epoch,n=None,time=None,speed=21):
         print('训练%d个epoch,训练%d小时，需要%d张图片'%(epoch,time,n))
 
 if __name__ == '__main__':
-    batchsize = 64
+    batchsize = 16
     epoch = 100
-    n = 7455
-    time = None
+    n = None
+    time = 24
 
     caculate(batchsize=batchsize,epoch=epoch,n=n,time=time)
 
