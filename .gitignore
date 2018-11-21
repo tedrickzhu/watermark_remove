@@ -6,4 +6,5 @@ images/
 checkpoint6/
 logs6/
 samples6/
+data/
 __init__.py
