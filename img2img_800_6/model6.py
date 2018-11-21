@@ -60,12 +60,14 @@ class DCGAN(object):
         self.d_bn2 = batch_norm(name='d_bn2')
         self.d_bn3 = batch_norm(name='d_bn3')
         self.d_bn4 = batch_norm(name='d_bn4')
+        self.d_bn5 = batch_norm(name='d_bn5')
 
         self.g_bn0 = batch_norm(name='g_bn0')
         self.g_bn1 = batch_norm(name='g_bn1')
         self.g_bn2 = batch_norm(name='g_bn2')
         self.g_bn3 = batch_norm(name='g_bn3')
         self.g_bn4 = batch_norm(name='g_bn4')
+        self.g_bn5 = batch_norm(name='g_bn5')
 
         self.dataset_name = dataset_name
         self.dataset_test = dataset_test
@@ -75,10 +77,10 @@ class DCGAN(object):
         self.logdir=logdir
 
         #get image file lists.
-        a = os.path.join("../images/data/", self.dataset_name, self.input_fname_pattern)
+        a = os.path.join("./data/", self.dataset_name, self.input_fname_pattern)
         self.data = glob(a)
-        self.data_test = glob(os.path.join("../images/data/", self.dataset_test, self.input_fname_pattern))
-        self.data_target = glob(os.path.join("../images/data/", self.dataset_target, self.input_fname_pattern))
+        self.data_test = glob(os.path.join("./data/", self.dataset_test, self.input_fname_pattern))
+        self.data_target = glob(os.path.join("./data/", self.dataset_target, self.input_fname_pattern))
         print('hhhhhhhhhhhhhhhhhhhhhhhhh')
         # print(a)
         imreadImg = imread(self.data[0])
@@ -255,8 +257,9 @@ class DCGAN(object):
                 h2 = lrelu(self.d_bn2(conv2d(h1, self.df_dim * 4, name='d_h2_conv')))
                 h3 = lrelu(self.d_bn3(conv2d(h2, self.df_dim * 8, name='d_h3_conv')))
                 h4 = lrelu(self.d_bn4(conv2d(h3, self.df_dim * 16, name='d_h4_conv')))
-                print('disciminator dddddddddddddddddddddddddddddddddddddddddd',h4.shape)
-                return tf.nn.sigmoid(h4), h4
+                h5 = lrelu(self.d_bn5(conv2d(h4, self.df_dim * 32, name='d_h5_conv')))
+                print('disciminator dddddddddddddddddddddddddddddddddddddddddd',h5.shape)
+                return tf.nn.sigmoid(h5), h5
             else:
                 yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
                 x = conv_cond_concat(image, yb)
@@ -283,14 +286,19 @@ class DCGAN(object):
                 s_h4, s_w4 = conv_out_size_same(s_h2, 2), conv_out_size_same(s_w2, 2)
                 s_h8, s_w8 = conv_out_size_same(s_h4, 2), conv_out_size_same(s_w4, 2)
                 s_h16, s_w16 = conv_out_size_same(s_h8, 2), conv_out_size_same(s_w8, 2)
+                s_h32, s_w32 = conv_out_size_same(s_h16, 2), conv_out_size_same(s_w16, 2)
                 '''
                 解码器：
                 此处deconv2d函数，输入(z,outputshape=[batch_size,h,w,filter_nums])
                 输出的尺寸为编码器对应的上一层的尺寸（可以理解为编码器退回一层）
                 '''
                 print('generator gggggggggggggggggggggggggggggggg',z.shape)
+                h5, self.h5_w, self.h5_b = deconv2d(
+                    z, [self.batch_size, s_h32, s_w32, self.gf_dim * 16], name='g_h5', with_w=True)
+                h5 = tf.nn.relu(self.g_bn5(h5))
+
                 h0, self.h0_w, self.h0_b = deconv2d(
-                    z, [self.batch_size, s_h16, s_w16, self.gf_dim * 8], name='g_h0', with_w=True)
+                    h5, [self.batch_size, s_h16, s_w16, self.gf_dim * 8], name='g_h0', with_w=True)
                 h0 = tf.nn.relu(self.g_bn0(h0))
 
                 h1, self.h1_w, self.h1_b = deconv2d(
