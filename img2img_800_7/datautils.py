@@ -81,7 +81,7 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
         # if filename != '105104.jpg':
         #     continue
         # print(filename)
-        if count >= 552:
+        if count >= 1500:
             break
         image = cv2.imread(path+filename)
         print(path+filename)
@@ -104,6 +104,7 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
             os.makedirs(originpath)
         if os.path.exists(originpath+logoname+'_'+filename):
             print(originpath+logoname+'_'+filename,' this origin file has exists')
+            continue
             # cv2.imwrite(originpath+filename,image)
         else:
             cv2.imwrite(originpath+logoname+'_'+filename,image)
@@ -114,7 +115,7 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
             print(dirtypath + logoname+'_'+filename,' this dirty file has exists')
         else:
             cv2.imwrite(dirtypath + logoname+'_'+filename, imageadd2)
-        count+=1
+            count+=1
         # cv2.imshow('origin', image)
         # cv2.imshow('add2', imageadd2)
         # cv2.waitKey(0)

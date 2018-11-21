@@ -19,7 +19,7 @@ class DCGAN(object):
     def __init__(self, sess, input_height=108, input_width=108, crop=True,
                  batch_size=16, sample_num=64, output_height=64, output_width=64,
                  y_dim=None, z_dim=100, gf_dim=64, df_dim=64,
-                 gfc_dim=10240, dfc_dim=10240, c_dim=3, dataset_name='dirty',
+                 gfc_dim=1024, dfc_dim=1024, c_dim=3, dataset_name='dirty',
                  input_fname_pattern='*.jpg', checkpoint_dir=None, sample_dir=None,
                  dataset_test=None, dataset_target=None, logdir=None
                  ):
@@ -58,14 +58,14 @@ class DCGAN(object):
         # batch normalization : deals with poor initialization helps gradient flow
         self.d_bn1 = batch_norm(name='d_bn1')
         self.d_bn2 = batch_norm(name='d_bn2')
+
         self.d_bn3 = batch_norm(name='d_bn3')
-        self.d_bn4 = batch_norm(name='d_bn4')
 
         self.g_bn0 = batch_norm(name='g_bn0')
         self.g_bn1 = batch_norm(name='g_bn1')
         self.g_bn2 = batch_norm(name='g_bn2')
+
         self.g_bn3 = batch_norm(name='g_bn3')
-        self.g_bn4 = batch_norm(name='g_bn4')
 
         self.dataset_name = dataset_name
         self.dataset_test = dataset_test
@@ -254,9 +254,8 @@ class DCGAN(object):
                 h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim * 2, name='d_h1_conv')))
                 h2 = lrelu(self.d_bn2(conv2d(h1, self.df_dim * 4, name='d_h2_conv')))
                 h3 = lrelu(self.d_bn3(conv2d(h2, self.df_dim * 8, name='d_h3_conv')))
-                h4 = lrelu(self.d_bn4(conv2d(h3, self.df_dim * 16, name='d_h4_conv')))
-                print('disciminator dddddddddddddddddddddddddddddddddddddddddd',h4.shape)
-                return tf.nn.sigmoid(h4), h4
+
+                return tf.nn.sigmoid(h3), h3
             else:
                 yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
                 x = conv_cond_concat(image, yb)
@@ -282,20 +281,10 @@ class DCGAN(object):
                 s_h2, s_w2 = conv_out_size_same(s_h, 2), conv_out_size_same(s_w, 2)
                 s_h4, s_w4 = conv_out_size_same(s_h2, 2), conv_out_size_same(s_w2, 2)
                 s_h8, s_w8 = conv_out_size_same(s_h4, 2), conv_out_size_same(s_w4, 2)
-                s_h16, s_w16 = conv_out_size_same(s_h8, 2), conv_out_size_same(s_w8, 2)
-                '''
-                解码器：
-                此处deconv2d函数，输入(z,outputshape=[batch_size,h,w,filter_nums])
-                输出的尺寸为编码器对应的上一层的尺寸（可以理解为编码器退回一层）
-                '''
-                print('generator gggggggggggggggggggggggggggggggg',z.shape)
-                h0, self.h0_w, self.h0_b = deconv2d(
-                    z, [self.batch_size, s_h16, s_w16, self.gf_dim * 8], name='g_h0', with_w=True)
-                h0 = tf.nn.relu(self.g_bn0(h0))
 
-                h1, self.h1_w, self.h1_b = deconv2d(
-                    h0, [self.batch_size, s_h8, s_w8, self.gf_dim * 4], name='g_h1', with_w=True)
-                h1 = tf.nn.relu(self.g_bn1(h1))
+                self.h1, self.h1_w, self.h1_b = deconv2d(
+                    z, [self.batch_size, s_h8, s_w8, self.gf_dim * 4], name='g_h1', with_w=True)
+                h1 = tf.nn.relu(self.g_bn1(self.h1))
 
                 h2, self.h2_w, self.h2_b = deconv2d(
                     h1, [self.batch_size, s_h4, s_w4, self.gf_dim * 2], name='g_h2', with_w=True)
