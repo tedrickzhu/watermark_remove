@@ -81,13 +81,13 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
         # if filename != '105104.jpg':
         #     continue
         # print(filename)
-        if count >= 1500:
+        if count >= 1700:
             break
         image = cv2.imread(path+filename)
         print(path+filename)
         #将原图缩小,最大为400
         img_h ,img_w = image.shape[0],image.shape[1]
-        rate = max(img_h,img_w)//800.0
+        rate = max(img_h,img_w)//400.0
         if rate > 0.0:
             rate = rate+1.0
             image = cv2.resize(image, (int(img_w / rate), int(img_h / rate)))
