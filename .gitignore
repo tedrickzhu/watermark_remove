@@ -5,5 +5,7 @@ __pycache__/
 images/
 checkpoint6/
 logs6/
-samples6/
+samples6*/
+img2img_200*/
+img2img_800*/
 __init__.py
