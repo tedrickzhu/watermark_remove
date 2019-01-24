@@ -15,21 +15,21 @@ flags.DEFINE_float("learning_rate", 0.00001, "Learning rate of for adam [0.0002]
 flags.DEFINE_float("beta1", 0.9, "Momentum term of adam [0.5]")
 flags.DEFINE_integer("train_size", 100000, "The size of train images [np.inf]")
 flags.DEFINE_integer("batch_size", 64, "The size of batch images [64]")
-flags.DEFINE_integer("input_height", 256, "The size of image to use (will be center cropped). [108]")
+flags.DEFINE_integer("input_height", 200, "The size of image to use (will be center cropped). [108]")
 flags.DEFINE_integer("input_width", None,
                      "The size of image to use (will be center cropped). If None, same value as input_height [None]")
-flags.DEFINE_integer("output_height", 256, "The size of the output images to produce [64]")
+flags.DEFINE_integer("output_height", 200, "The size of the output images to produce [64]")
 flags.DEFINE_integer("output_width", None,
                      "The size of the output images to produce. If None, same value as output_height [None]")
 flags.DEFINE_string("input_fname_pattern", "*.jpg", "Glob pattern of filename of input images [*]")
-flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
+flags.DEFINE_boolean("train", False, "True for training, False for testing [False]")
 flags.DEFINE_boolean("crop", False, "True for training, False for testing [False]")
 
-flags.DEFINE_string("dataset", "dirty/", "The name of dataset [celebA, mnist, lsun]")
+flags.DEFINE_string("dataset", "dirtysourcesize/", "The name of dataset [celebA, mnist, lsun]")
 flags.DEFINE_string("checkpoint_dir", "checkpoint6/", "Directory name to save the checkpoints [checkpoint]")
 flags.DEFINE_string("sample_dir", "samples6/", "Directory name to save the image samples [samples]")
-flags.DEFINE_string("dataset_test", "dirty/", "Directory name of testing samples")
-flags.DEFINE_string("dataset_target", "origin/", "Directory name of target(generated) images")
+flags.DEFINE_string("dataset_test", "dirtysourcesize/", "Directory name of testing samples")
+flags.DEFINE_string("dataset_target", "originsourcesize/", "Directory name of target(generated) images")
 flags.DEFINE_string("logdir", "logs6/", "logdir")
 
 FLAGS = flags.FLAGS

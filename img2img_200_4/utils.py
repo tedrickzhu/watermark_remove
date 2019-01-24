@@ -24,6 +24,23 @@ def show_all_variables():
   model_vars = tf.trainable_variables()
   slim.model_analyzer.analyze_vars(model_vars, print_info=True)
 
+def get_image_test(image_path, input_height, input_width,
+              resize_height=64, resize_width=64,
+              crop=True, grayscale=False):
+  image = imread(image_path, grayscale)
+  if resize_width is None:
+    resize_width = resize_height
+  h, w = image.shape[:2]
+  image1 = scipy.misc.imresize(
+      image[0:int(h/2), 0:int(w/2)], [resize_height, resize_width])
+  # image2 = scipy.misc.imresize(
+  #     image[0:h/2, w/2:w], [resize_height, resize_width])
+  # image3 = scipy.misc.imresize(
+  #     image[h/2:h, 0:w/2], [resize_height, resize_width])
+  # image4 = scipy.misc.imresize(
+  #     image[h/2:h, w/2:w], [resize_height, resize_width])
+  return image1
+
 def get_image(image_path, input_height, input_width,
               resize_height=64, resize_width=64,
               crop=True, grayscale=False):
@@ -89,17 +106,23 @@ def center_crop(x, crop_h, crop_w,
   h, w = x.shape[:2]
   j = int(round((h - crop_h)/2.))
   i = int(round((w - crop_w)/2.))
+  print('h and w: ',h,w)
+  print('j and i: ',j,i)
+  print('crop_h:',crop_h,'  crop_w:',crop_w)
+  print('resize_h:',resize_h,'  w:',resize_w)
   return scipy.misc.imresize(
       x[j:j+crop_h, i:i+crop_w], [resize_h, resize_w])
 
 def transform(image, input_height, input_width,
               resize_height=64, resize_width=64, crop=True):
+  print('this is value of crop:', crop)
   if crop:
     cropped_image = center_crop(
       image, input_height, input_width,
       resize_height, resize_width)
   else:
     cropped_image = scipy.misc.imresize(image, [resize_height, resize_width])
+    print('this is input image size:',resize_height,resize_width)
   return np.array(cropped_image)/127.5 - 1.
 
 def transform2(image, input_height, input_width,

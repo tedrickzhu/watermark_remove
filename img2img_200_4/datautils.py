@@ -86,15 +86,15 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
         image = cv2.imread(path+filename)
         print(path+filename)
         #将原图缩小,最大为400
-        img_h ,img_w = image.shape[0],image.shape[1]
-        rate = max(img_h,img_w)//400.0
-        if rate > 0.0:
-            rate = rate+1.0
-            image = cv2.resize(image, (int(img_w / rate), int(img_h / rate)))
+        # img_h ,img_w = image.shape[0],image.shape[1]
+        # rate = max(img_h,img_w)//400.0
+        # if rate > 0.0:
+        #     rate = rate+1.0
+        #     image = cv2.resize(image, (int(img_w / rate), int(img_h / rate)))
         #将水印图调整到与小图一致
         img_h, img_w = image.shape[0], image.shape[1]
         watermark_res = cv2.resize(watermark,(img_w, img_h))
-        mask = np.floor(watermark_res.astype(np.float32) * 0.8).astype(np.uint8)
+        mask = np.floor(watermark_res.astype(np.float32) * 0.2).astype(np.uint8)
         imageadd2 = cv2.add(image,mask)
 
         # imageaddweight = cv2.addWeighted(image,0.9,watermark,0.2,0)
@@ -124,9 +124,9 @@ def resize_addwm_5i5jfull(path,wmpath,originpath,dirtypath):
 
 if __name__ == '__main__':
     data = '../../data/oxbuild_images/'
-    wmpath = '../mask/fang_mask.jpeg'
-    originpath = '../images/data/origin/'
-    dirtypath = '../images/data/dirty/'
+    wmpath = '../mask/5i5j-logo.bmp'
+    originpath = '../images/data/originsourcesize/'
+    dirtypath = '../images/data/dirtysourcesize/'
 
     # addLogo_5i5jfull(data,wmpath,originpath,dirtypath)
     resize_addwm_5i5jfull(data,wmpath,originpath,dirtypath)

@@ -19,7 +19,7 @@ class DCGAN(object):
     def __init__(self, sess, input_height=108, input_width=108, crop=True,
                  batch_size=16, sample_num=64, output_height=64, output_width=64,
                  y_dim=None, z_dim=100, gf_dim=64, df_dim=64,
-                 gfc_dim=1024, dfc_dim=1024, c_dim=3, dataset_name='dirty',
+                 gfc_dim=1024, dfc_dim=1024, c_dim=3, dataset_name='dirtysourcesize',
                  input_fname_pattern='*.jpg', checkpoint_dir=None, sample_dir=None,
                  dataset_test=None, dataset_target=None, logdir=None
                  ):
@@ -58,13 +58,11 @@ class DCGAN(object):
         # batch normalization : deals with poor initialization helps gradient flow
         self.d_bn1 = batch_norm(name='d_bn1')
         self.d_bn2 = batch_norm(name='d_bn2')
-
         self.d_bn3 = batch_norm(name='d_bn3')
 
         self.g_bn0 = batch_norm(name='g_bn0')
         self.g_bn1 = batch_norm(name='g_bn1')
         self.g_bn2 = batch_norm(name='g_bn2')
-
         self.g_bn3 = batch_norm(name='g_bn3')
 
         self.dataset_name = dataset_name
@@ -79,8 +77,6 @@ class DCGAN(object):
         self.data = glob(a)
         self.data_test = glob(os.path.join("../images/data/", self.dataset_test, self.input_fname_pattern))
         self.data_target = glob(os.path.join("../images/data/", self.dataset_target, self.input_fname_pattern))
-        print('hhhhhhhhhhhhhhhhhhhhhhhhh')
-        # print(a)
         imreadImg = imread(self.data[0])
         self.c_dim = imread(self.data[0]).shape[-1]
 
@@ -216,6 +212,9 @@ class DCGAN(object):
 
         #get sample input data.
         sample_files = self.data_test[0:self.sample_num]
+
+        print('hahahahahahahahahahahahahahahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+
         sample = [
             get_image(sample_file,
                        input_height=self.input_height,
@@ -225,7 +224,9 @@ class DCGAN(object):
                        crop=self.crop,grayscale=False) for sample_file in sample_files]
 
         sample_inputs = np.array(sample).astype(np.float32)
-        print('hahahahahahahahahahahahahahah')
+        print('self.input height:',self.input_height,'  self.output_height:',self.output_height)
+        print('hahahahahahahahahahahahahahahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+
         could_load, checkpoint_counter = self.load(self.checkpoint_dir)
         if could_load:
             counter = checkpoint_counter
