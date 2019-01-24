@@ -7,4 +7,5 @@ checkpoint6/
 logs6/
 samples6*/
 data/
+output/
 __init__.py
